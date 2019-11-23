@@ -1,0 +1,39 @@
+System check identified no issues (0 silenced).
+.......................F.F........F....................
+======================================================================
+FAIL: test2 (logic.tests_services.JoinGameServiceTests)
+Unirse correctamente a un juego del que no eres raton
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/juan/PycharmProjects/psi_1361_4_p3/logic/tests_services.py", line 573, in test2
+    self.assertEqual(Game.objects.get(id=id_game).mouse_user, session["user"])
+AssertionError: None != <User: testUserMouseCatBaseTest_2>
+
+======================================================================
+FAIL: test4 (logic.tests_services.JoinGameServiceTests)
+No hay juegos de los que no soy el gato a los que unirse
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/juan/PycharmProjects/psi_1361_4_p3/logic/tests_services.py", line 592, in test4
+    self.is_join_game_error(response)
+  File "/home/juan/PycharmProjects/psi_1361_4_p3/logic/tests_services.py", line 244, in is_join_game_error
+    self.validate_response(JOIN_GAME_ERROR_NOGAME, response)
+  File "/home/juan/PycharmProjects/psi_1361_4_p3/logic/tests_services.py", line 210, in validate_response
+    self.assertTrue(m)
+AssertionError: None is not true
+
+======================================================================
+FAIL: test0 (logic.tests_services.MoveServiceTests)
+Campos de formulario válidos
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/juan/PycharmProjects/psi_1361_4_p3/logic/tests_services.py", line 771, in test0
+    self.assertFalse(forms.MoveForm({"origin": -1, "target": 0}).is_valid())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 55 tests in 118.390s
+
+FAILED (failures=3)
+Destroying test database for alias 'default'...
+

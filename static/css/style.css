@@ -99,3 +99,10 @@ input, select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+.board { width:50px;
+        border:1px solid #000000;
+        text-align:center;
+        background-color: #3875d7;
+        height: 50px;
+}

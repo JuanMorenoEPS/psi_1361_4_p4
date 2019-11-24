@@ -5,7 +5,25 @@
     <h1>Play</h1>
     <p>Game: <b>{{ game.id }}</b></p>
 
-    <form class="move_form" method="post" action="{% url 'move' %}">
+    <div class="clearfix">
+        <div id="left">
+            {% if board %}
+            <table id="goup">
+            {% for item in board %}
+            {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
+            <td id="cell_{{ forloop.counter0}}" class="board">
+                {% if item ==  0 %}
+                {% elif item == 1 %}  <img src="{{ MEDIA_URL }}cat.png" alt="Cat"/>
+                {% else %}  <img src="{{ MEDIA_URL }}cat.jpg" alt="Mouse"/> {% endif %}
+            </td>
+            {% if forloop.counter|divisibleby:8 or forloop.last %}</tr>{% endif %}
+            {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+
+        <div id="right">
+            <form class="move_form" method="post" action="{% url 'move' %}">
         {% csrf_token %}
         <p>
             Cats: <b>{{ game.cat_user.username }}</b>
@@ -36,20 +54,13 @@
             {% endif %}
         </p>
     </form>
+        </div>
 
-    {% if board %}
-        <table id="goup">
-        {% for item in board %}
-            {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
-            <td id="cell_{{ forloop.counter0}}" class="board">
-                {% if item ==  0 %}
-                {% elif item == 1 %}  <img src="{{ MEDIA_URL }}cat.png" alt="Cat"/>
-                {% else %}  <img src="{{ MEDIA_URL }}cat.jpg" alt="Mouse"/> {% endif %}
-            </td>
-            {% if forloop.counter|divisibleby:8 or forloop.last %}</tr>{% endif %}
-        {% endfor %}
-        </table>
-    {% endif %}
+
+    </div>
+
+
+
 
     <p><a href="{% url 'landing' %}">Return to homepage</a></p>
 </div>

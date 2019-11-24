@@ -16,9 +16,9 @@
 </head>
 
 <body id="body">
-    <div id="totalheader">
+        <div id="totalheader">
         <div id="title">
-            {% block atitle %}<h1>Mouse vs Cats</h1>{% endblock atitle %}
+            {% block atitle %}<h1>Mouse vs. Cats</h1>{% endblock atitle %}
         </div>
 
         <div id="header">
@@ -26,14 +26,31 @@
                 Welcome <span class="username">{{ request.user.username }}</span>!
             {% endif %}
         </div>
-    </div>
+        </div>
 
-    <hr/>
+            <div class="column">
+                <div class="col-3 col-s-3 menu">
+                <ul>
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Signup</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'counter' %}">Counter</a></li>
+                <li><a href="{% url 'create_game' %}">Create game</a></li>
+                <li><a href="{% url 'join_game' %}">Join game</a></li>
+                <li><a href="{% url 'select_game' %}">Select game</a></li>
+                <li><a href="{% url 'show_game' %}">Play</a></li>
+                {% endif %}
+            </ul>
+            </div>
+            </div>
+            <div class="main">
+                {% block content %}
+                {% endblock content %}
+            </div>
 
-    {% block content %}
-    {% endblock content %}
-
-    <hr/>
 
     {% block footer %}
     {% endblock footer %}

@@ -1,10 +1,6 @@
 #body{background-color: white;  font-family: Helvetica, sans-serif;}
 
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
+
 
 [class*="col-"] {
   float: left;
@@ -14,7 +10,7 @@
 .menu ul {
   list-style-type: none;
   margin: 0;
-  padding: 20;
+  padding: 10;
 }
 
 .menu li {
@@ -28,8 +24,6 @@
   background-color: #adadeb;
 }
 
-.col{float:left;width:100%; }
-
 .column {
   float: left;
   width: 15%;
@@ -40,19 +34,11 @@
 }
 
 .main {
-  width: 60%;
+  width: 70%;
   align: center;
   background-color: white;
   padding-left:20%;
-  margin-top:8%;
-}
-
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+  margin-top:110px;
 }
 
 #totalheader{

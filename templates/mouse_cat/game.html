@@ -13,8 +13,8 @@
             {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
             <td id="cell_{{ forloop.counter0}}" class="board">
                 {% if item ==  0 %}
-                {% elif item == 1 %}  <img src="{{ MEDIA_URL }}cat.png" alt="Cat"/>
-                {% else %}  <img src="{{ MEDIA_URL }}cat.jpg" alt="Mouse"/> {% endif %}
+                {% elif item == 1 %}  <img src="/static/images/cat.png" id="cat" alt="Cat"/>
+                {% else %}  <img src="/static/images/mouse.png" id="mouse" alt="Mouse"/> {% endif %}
             </td>
             {% if forloop.counter|divisibleby:8 or forloop.last %}</tr>{% endif %}
             {% endfor %}
@@ -55,13 +55,7 @@
         </p>
     </form>
         </div>
-
-
     </div>
-
-
-
-
     <p><a href="{% url 'landing' %}">Return to homepage</a></p>
 </div>
 

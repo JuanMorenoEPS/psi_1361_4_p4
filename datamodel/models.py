@@ -192,10 +192,10 @@ class Move(models.Model):
             return True
 
         for gato in gatos:
-            if gato != self.game.mouse + 7 or gato != self.game.mouse + 9 or gato != self.game.mouse - 7 or gato != self.game.mouse - 9:
-                return False
+            if gato == self.game.mouse or gato == self.game.mouse or gato == self.game.mouse or gato == self.game.mouse:
+                return True
 
-        return True
+        return False
 
     def save(self, *args, **kwargs):
         origin = int(self.origin)

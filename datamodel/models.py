@@ -159,7 +159,7 @@ class Move(models.Model):
                 targetcalc2 = origin + 9
                 if target != targetcalc1 and target != targetcalc2:
                     return False
-            if target == self.game.cat1 or target == self.game.cat2 or target == self.game.cat3 or target == self.game.cat4 or target == self.game.mouse:
+            if target == self.game.cat1 or target == self.game.cat2 or target == self.game.cat3 or target == self.game.cat4:
                 return False
 
             return True
@@ -182,7 +182,7 @@ class Move(models.Model):
                 targetcalc4 = origin - 9
                 if target != targetcalc1 and target != targetcalc2 and target != targetcalc3 and target != targetcalc4:
                     return False
-            if target == self.game.cat1 or target == self.game.cat2 or target == self.game.cat3 or target == self.game.cat4 or target == self.game.mouse:
+            if target == self.game.cat1 or target == self.game.cat2 or target == self.game.cat3 or target == self.game.cat4:
                 return False
             return True
 
@@ -204,6 +204,7 @@ class Move(models.Model):
             raise ValidationError(constants.MSG_ERROR_MOVE)
 
         if self.finish_game() is True:
+            self.game.status = GameStatus.FINISHED
             raise ValidationError(constants.FINISHED_GAME)
 
         if self.game.status == GameStatus.FINISHED:

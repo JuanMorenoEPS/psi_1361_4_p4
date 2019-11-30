@@ -177,6 +177,14 @@ def show_game_service(request):
     dict['board'] = board
     dict['move_form'] = MoveForm()
 
+    if game.status == GameStatus.FINISHED:
+        print("acabaaaaaaaaa")
+        dictF = {}
+        dictF['game'] = game
+        dictF['board'] = board
+        return render(request, "mouse_cat/game.html", dictF)
+
+
     return render(request, "mouse_cat/game.html", dict)
 
 

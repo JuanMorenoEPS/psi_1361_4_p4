@@ -8,7 +8,7 @@
     <div class="clearfix">
         <div id="left">
             {% if board %}
-            <table id="goup">
+            <table>
             {% for item in board %}
             {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
             <td id="cell_{{ forloop.counter0}}" class="board">

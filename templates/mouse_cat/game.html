@@ -11,12 +11,12 @@
             <table>
             {% for item in board %}
             {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
-            <td id="cell_{{ forloop.counter0}}" class="board" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <td id="cell_{{ forloop.counter0}}" class="board" ondrop="drop(event, this)" ondragover="allowDrop(event)">
                 {% if item ==  0 %}
-                {% elif item == 1 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag"/>
-                {% elif item == 2 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag1"/>
-                {% elif item == 3 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="dra2"/>
-                {% elif item == 4 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag3"/>
+                {% elif item == 1 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event, this)" alt="Cat" id="drag"/>
+                {% elif item == 2 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event, this)" alt="Cat" id="drag1"/>
+                {% elif item == 3 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event, this)" alt="Cat" id="dra2"/>
+                {% elif item == 4 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event, this)" alt="Cat" id="drag3"/>
                 {% else %}  <img src="/static/images/mouse.png" class="mouse"draggable="true" ondragstart="drag(event)" alt="Cat" id="drag4" alt="Mouse"/> {% endif %}
             </td>
             {% if forloop.counter|divisibleby:8 or forloop.last %}</tr>{% endif %}
@@ -26,7 +26,7 @@
         </div>
 
         <div id="right">
-            <form class="move_form" method="post" action="{% url 'move' %}">
+            <form class="move_form" id="move" method="post" action="{% url 'move' %}">
         {% csrf_token %}
         <p>
             Cats: <b>{{ game.cat_user.username }}</b>
@@ -63,20 +63,22 @@
     <p><a href="{% url 'landing' %}">Return to homepage</a></p>
 </div>
 
-
 <script>
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function drag(ev) {
+function drag(ev, element) {
   ev.dataTransfer.setData("text", ev.target.id);
+  var form = document.getElementById("move");
+  form.origin.value = element.parentNode.id;
 }
 
-function drop(ev) {
+function drop(ev, element) {
   ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+  var form = document.getElementById("move");
+  form.target.value = element.id;
+  document.getElementById("move").submit();
 }
 </script>
 {% endblock content %}

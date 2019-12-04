@@ -205,6 +205,7 @@ class Move(models.Model):
 
         if self.finish_game() is True:
             self.game.status = GameStatus.FINISHED
+            self.game.save()
             raise ValidationError(constants.FINISHED_GAME)
 
         if self.game.status == GameStatus.FINISHED:

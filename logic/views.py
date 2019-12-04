@@ -167,23 +167,31 @@ def show_game_service(request):
     for i in range(0, 64):
         if i == mouse:
             board.append(-1)
-        elif i in cats:
+        elif i == game.cat1:
             board.append(1)
+        elif i == game.cat2:
+            board.append(2)
+        elif i == game.cat3:
+            board.append(3)
+        elif i == game.cat4:
+            board.append(4)
         else:
             board.append(0)
+
+    print(game.status)
+    if game.status == GameStatus.FINISHED:
+        print("acabaaaaaaaaa")
+        dictF = {}
+        dictF['board'] = board
+        dictF['game'] = game
+        dictF['finished'] = "Finished Game!"
+
+        return render(request, "mouse_cat/game.html", dictF)
 
     dict = {}
     dict['game'] = game
     dict['board'] = board
     dict['move_form'] = MoveForm()
-
-    if game.status == GameStatus.FINISHED:
-        print("acabaaaaaaaaa")
-        dictF = {}
-        dictF['game'] = game
-        dictF['board'] = board
-        return render(request, "mouse_cat/game.html", dictF)
-
 
     return render(request, "mouse_cat/game.html", dict)
 

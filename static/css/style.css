@@ -144,12 +144,19 @@ tr:nth-child(even) td:nth-child(odd) {
   display: table;
 }
 
-#cat{
-  width:90%;
-  height:90%;
+.cat{
+  width:100%;
+  height:100%;
+  z-index:100;
+  position:relative;
+  cursor:pointer;
+
 }
 
-#mouse{
-  width:90%;
-  height:90%;
+.mouse{
+  width:100%;
+  height:100%;
+  z-index:100;
+  position:relative;
+  cursor:pointer;
 }

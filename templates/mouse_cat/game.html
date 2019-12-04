@@ -11,10 +11,13 @@
             <table>
             {% for item in board %}
             {% if forloop.counter0|divisibleby:8 %}<tr>{% endif %}
-            <td id="cell_{{ forloop.counter0}}" class="board">
+            <td id="cell_{{ forloop.counter0}}" class="board" ondrop="drop(event)" ondragover="allowDrop(event)">
                 {% if item ==  0 %}
-                {% elif item == 1 %}  <img src="/static/images/cat.png" id="cat" alt="Cat"/>
-                {% else %}  <img src="/static/images/mouse.png" id="mouse" alt="Mouse"/> {% endif %}
+                {% elif item == 1 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag"/>
+                {% elif item == 2 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag1"/>
+                {% elif item == 3 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="dra2"/>
+                {% elif item == 4 %}  <img src="/static/images/cat.png" class="cat" draggable="true" ondragstart="drag(event)" alt="Cat" id="drag3"/>
+                {% else %}  <img src="/static/images/mouse.png" class="mouse"draggable="true" ondragstart="drag(event)" alt="Cat" id="drag4" alt="Mouse"/> {% endif %}
             </td>
             {% if forloop.counter|divisibleby:8 or forloop.last %}</tr>{% endif %}
             {% endfor %}
@@ -56,52 +59,24 @@
     </form>
         </div>
     </div>
+    <h2>{{finished}}</h2>
     <p><a href="{% url 'landing' %}">Return to homepage</a></p>
 </div>
 
+
 <script>
-//Make the DIV element draggagle:
-dragElement(document.getElementById("mydiv"));
+function allowDrop(ev) {
+  ev.preventDefault();
+}
 
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    /* if present, the header is where you move the DIV from:*/
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-  } else {
-    /* otherwise, move the DIV from anywhere inside the DIV:*/
-    elmnt.onmousedown = dragMouseDown;
-  }
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
 
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    /* stop moving when mouse button is released:*/
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
 }
 </script>
 {% endblock content %}

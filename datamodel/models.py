@@ -200,16 +200,9 @@ class Move(models.Model):
     def save(self, *args, **kwargs):
         origin = int(self.origin)
         target = int(self.target)
+
         if self.game.status == GameStatus.CREATED or self.game.status == GameStatus.FINISHED:
             raise ValidationError(constants.MSG_ERROR_MOVE)
-
-        if self.finish_game() is True:
-            self.game.status = GameStatus.FINISHED
-            self.game.save()
-            raise ValidationError(constants.FINISHED_GAME)
-
-        if self.game.status == GameStatus.FINISHED:
-            raise ValidationError(constants.FINISHED_GAME)
 
         if self.movimientos_validos() is False:
             raise ValidationError(constants.MSG_ERROR_MOVE)
@@ -245,6 +238,13 @@ class Move(models.Model):
 
         elif not(self.player == self.game.cat_user and self.game.cat_turn and self.player == self.game.mouse_user and not self.game.cat_turn):
             raise ValidationError(constants.MSG_ERROR_MOVE)
+
+        if self.game.status == GameStatus.CREATED or self.game.status == GameStatus.FINISHED:
+            raise ValidationError(constants.MSG_ERROR_MOVE)
+
+        if self.finish_game() is True:
+            self.game.status = GameStatus.FINISHED
+            self.game.save()
 
         super(Move, self).save(*args, **kwargs)
 

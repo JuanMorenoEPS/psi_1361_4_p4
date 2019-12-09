@@ -25,8 +25,8 @@
             {% endif %}
         </div>
 
-        <div id="right">
-            <form class="move_form" id="move" method="post" action="{% url 'move' %}">
+        <div id="right" >
+            <form class="move_form" id="move_form" method="post" action="{% url 'move' %}" style="display:none">
         {% csrf_token %}
         <p>
             Cats: <b>{{ game.cat_user.username }}</b>
@@ -34,7 +34,7 @@
                 <blockquote class="cat">
                     {% if game.cat_turn %}
                         {{ move_form }}
-                        <input type="submit" value="Move" />
+                        <input type="submit" value="Move" >
                     {% else %}
                         Waiting for the mouse...
                         <a style="margin-left:20px;font-weight:normal" href="{% url 'show_game' %}">Refresh</a>
@@ -48,6 +48,7 @@
                 <blockquote class="mouse">
                     {% if not game.cat_turn %}
                         {{ move_form }}
+                        Mouse turn
                         <input type="submit" value="Move" />
                     {% else %}
                         Waiting for the cat...
@@ -64,20 +65,37 @@
 </div>
 
 <script>
+    $(function () {
+            $('#move_form').submit(function (ev) {
+                var frm = $(this);
+                $.ajax({
+                    type: frm.attr('method'),
+                    url: frm.attr('action'),
+                    data: frm.serialize(),
+                    success: function (data) {
+                        //Do What Ever You Wanna Do
+                    }
+                });
+                ev.preventDefault();
+            });
+        });
+</script>
+
+<script>
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
 function drag(ev, element) {
-  let form = document.getElementById("move");
+  let form = document.getElementById("move_form");
   form.origin.value = element.parentNode.id;
 }
 
 function drop(ev, element) {
   ev.preventDefault();
-  let form = document.getElementById("move");
+  let form = document.getElementById("move_form");
   form.target.value = element.id;
-  document.getElementById("move").submit();
+  document.getElementById("move_form").submit();
 }
 </script>
 {% endblock content %}

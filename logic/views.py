@@ -6,7 +6,8 @@ from datamodel import constants
 from django.http import HttpResponseForbidden, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
+import json
+from django.http import JsonResponse
 from logic.forms import SignupForm, MoveForm, LogInForm
 from datamodel.models import Game, Move, Counter, GameStatus
 
@@ -178,11 +179,8 @@ def show_game_service(request):
         else:
             board.append(0)
 
-    print(game.status)
     if game.status == GameStatus.FINISHED:
-        print("acabaaaaaaaaa")
         dictF = {}
-        dictF['board'] = board
         dictF['game'] = game
         dictF['finished'] = "Finished Game!"
 
@@ -216,5 +214,3 @@ def move_service(request):
             return redirect(reverse('show_game'))
 
     return HttpResponseNotFound('<h1>Page Not Found</h1>')
-
-

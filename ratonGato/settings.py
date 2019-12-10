@@ -33,7 +33,7 @@ SECRET_KEY = ')a)9!!-xj712_q(*n&k9t!kr0m$__nfc_f72ws-=v=cr5gxl1='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'cryptic-reef-72933.herokuapp.com', u'localhost', u'127.0.0.1']
+ALLOWED_HOSTS = [u'fathomless-headland-04580.herokuapp.com', u'localhost', u'127.0.0.1']
 
 # Application definition
 

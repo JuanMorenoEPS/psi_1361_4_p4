@@ -9,7 +9,7 @@ from django.urls import reverse
 import json
 from django.http import JsonResponse
 from logic.forms import SignupForm, MoveForm, LogInForm
-from datamodel.models import Game, Move, Counter, GameStatus
+from datamodel.models import Game, Move, Counter, GameStatus, WinStatus
 
 
 def anonymous_required(f):
@@ -180,11 +180,18 @@ def show_game_service(request):
             board.append(0)
 
     if game.status == GameStatus.FINISHED:
-        dictF = {}
-        dictF['game'] = game
-        dictF['finished'] = "Finished Game!"
+        if game.win == WinStatus.CATS:
+            dictFC = {}
+            dictFC['game'] = game
+            dictFC['finished'] = "Finished Game, Cats Win!"
+            return render(request, "mouse_cat/game.html", dictFC)
 
-        return render(request, "mouse_cat/game.html", dictF)
+        elif game.win == WinStatus.MOUSE:
+            dictFM = {}
+            dictFM['game'] = game
+            dictFM['finished'] = "Finished Game, Mouse Wins!"
+            return render(request, "mouse_cat/game.html", dictFM)
+
 
     dict = {}
     dict['game'] = game

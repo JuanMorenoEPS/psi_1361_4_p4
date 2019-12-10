@@ -21,8 +21,15 @@ class GameStatus:
     def getStatus(cls):
         return (cls.CREATED, "Created"), (cls.ACTIVE, "Active"), (cls.FINISHED, "Created")
 
-    def __str__(self): \
-            return "Status: " + self.status
+
+class WinStatus:
+    NO_ONE = 0
+    CATS = 1
+    MOUSE = 2
+
+    @classmethod
+    def getStatus(cls):
+        return (cls.NO_ONE, "No one"), (cls.CATS, "Cats"), (cls.MOUSE, "Mouse")
 
 
 class Game(models.Model):
@@ -40,6 +47,7 @@ class Game(models.Model):
     mouse = models.IntegerField(default=59, null=False, blank=False)
     cat_turn = models.BooleanField(default=True, null=False, blank=False)
     status = models.IntegerField(default=GameStatus.CREATED)
+    win = models.IntegerField(default=WinStatus.NO_ONE)
 
     def __init__(self, *args, **kwargs):
         super(Game, self).__init__(*args, **kwargs)
@@ -189,10 +197,12 @@ class Move(models.Model):
     def finish_game(self):
         gatos = [self.game.cat1, self.game.cat2, self.game.cat3, self.game.cat4]
         if self.game.mouse == 0 or self.game.mouse == 2 or self.game.mouse == 4 or self.game.mouse == 6:
+            self.game.win = WinStatus.MOUSE
             return True
 
         for gato in gatos:
             if gato == self.game.mouse or gato == self.game.mouse or gato == self.game.mouse or gato == self.game.mouse:
+                self.game.win = WinStatus.CATS
                 return True
 
         return False
@@ -200,9 +210,6 @@ class Move(models.Model):
     def save(self, *args, **kwargs):
         origin = int(self.origin)
         target = int(self.target)
-
-        if self.game.status == GameStatus.CREATED or self.game.status == GameStatus.FINISHED:
-            raise ValidationError(constants.MSG_ERROR_MOVE)
 
         if self.movimientos_validos() is False:
             raise ValidationError(constants.MSG_ERROR_MOVE)
@@ -237,9 +244,6 @@ class Move(models.Model):
                 raise ValidationError(tests.MSG_ERROR_INVALID_CELL)
 
         elif not(self.player == self.game.cat_user and self.game.cat_turn and self.player == self.game.mouse_user and not self.game.cat_turn):
-            raise ValidationError(constants.MSG_ERROR_MOVE)
-
-        if self.game.status == GameStatus.CREATED or self.game.status == GameStatus.FINISHED:
             raise ValidationError(constants.MSG_ERROR_MOVE)
 
         if self.finish_game() is True:

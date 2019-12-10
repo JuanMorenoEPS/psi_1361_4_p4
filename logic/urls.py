@@ -15,5 +15,4 @@ urlpatterns = [
     path('move/', views.move_service, name='move'),
     path('play/', views.show_game_service, name='show_game'),
     path('counter/', views.counter_service, name='counter'),
-    path('get_move/', views.get_move, name='get_move'),
 ]

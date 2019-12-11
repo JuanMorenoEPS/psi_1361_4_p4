@@ -183,13 +183,13 @@ def show_game_service(request):
         if game.win == WinStatus.CATS:
             dictFC = {}
             dictFC['game'] = game
-            dictFC['finished'] = "Finished Game, Cats Win!"
+            dictFC['finished'] = "Finished Game, " + str(game.cat_user) + "(Cats) Wins!"
             return render(request, "mouse_cat/game.html", dictFC)
 
         elif game.win == WinStatus.MOUSE:
             dictFM = {}
             dictFM['game'] = game
-            dictFM['finished'] = "Finished Game, Mouse Wins!"
+            dictFM['finished'] = "Finished Game, " + str(game.mouse_user) + "(Mouse) Wins!"
             return render(request, "mouse_cat/game.html", dictFM)
 
 

@@ -61,25 +61,14 @@
         </div>
     </div>
     <h2>{{finished}}</h2>
+    {% if game.cat_turn %}
+        Turno del gato
+    {% else %}
+        Turno del raton
+    {% endif %}
+
     <p><a href="{% url 'landing' %}">Return to homepage</a></p>
 </div>
-
-<script>
-    $(function () {
-            $('#move_form').submit(function (ev) {
-                var frm = $(this);
-                $.ajax({
-                    type: frm.attr('method'),
-                    url: frm.attr('action'),
-                    data: frm.serialize(),
-                    success: function (data) {
-                        //Do What Ever You Wanna Do
-                    }
-                });
-                ev.preventDefault();
-            });
-        });
-</script>
 
 <script>
 function allowDrop(ev) {
